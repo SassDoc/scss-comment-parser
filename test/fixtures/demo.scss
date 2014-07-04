@@ -1,0 +1,25 @@
+/**
+ * Test a mixin
+ * @annotationTest
+ * @aliasTest
+ */
+@mixin testMixin(){
+
+}
+
+
+/**
+ * Test a function
+ * @annotationTest
+ */
+
+@function testFunction(){
+
+}
+
+
+/**
+ * Test a variable
+ * @annotationTest
+ */
+$testVariable : "value"
