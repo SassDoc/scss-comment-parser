@@ -19,7 +19,7 @@ var scssContextParser = (function(){
           context.name = match[2];
           break;
         default :
-          context.type = 'unkown';
+          context.type = 'unknown';
       }
     }
     return context;
