@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Parses scss comments to build documentation",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FWeinb/ScssCommentParser"
+  },
   "scripts": {
     "test": "mocha test"
   },
