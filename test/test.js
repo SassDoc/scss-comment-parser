@@ -89,6 +89,12 @@ describe('ScssCommentParser', function(){
                                                               '\nThis is a\nmultiline\nannotation']);
     });
 
+    it('should include the scope of a variable', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result.variable[0].context.scope , 'private');
+         assert.equal(result.variable[1].context.scope , 'global');
+    });
+
   });
 
 });
