@@ -39,13 +39,13 @@ describe('ScssCommentParser', function(){
 
     it('should group multiple lines after a annotation', function(){
       var result = parser.parse ( scss );
-      assert.equal(result['function'][0].multiline[0], '\nThis is a\nmultiline\nannotation');
+      assert.equal(result['function'][0].multiline[0], '\n This is a\n multiline\n annotation');
     });
 
     it('should join lines without annotation into description', function(){
      var result = parser.parse ( scss );
          assert.equal(result.mixin.length , 1);
-         assert.equal(result.mixin[0].description , 'Test a mixin\n');
+         assert.equal(result.mixin[0].description , ' Test a mixin\n');
     });
 
     it('should resolve a alias to the real name', function(){
@@ -85,8 +85,8 @@ describe('ScssCommentParser', function(){
     it('should parse multiple multiline annotations', function(){
      var result = parser.parse ( scss );
          assert.equal(result['function'][2].context.name , 'testMultiline');
-         assert.deepEqual(result['function'][2].multiline , [ '\nThis is a\nmultiline\nannotation\n',
-                                                              '\nThis is a\nmultiline\nannotation']);
+         assert.deepEqual(result['function'][2].multiline , [ "\n This is a\n multiline\n annotation\n",
+                                                              "\n This is a\n multiline\n annotation"]);
     });
 
     it('should include the scope of a variable', function(){
