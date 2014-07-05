@@ -1,5 +1,6 @@
 /**
  * Test a mixin
+ * --- Ignore this line
  * @annotationTest
  * @aliasTest
  */
@@ -11,9 +12,22 @@
 /**
  * Test a function
  * @annotationTest
+ * @multiline
+ * This is a
+ * multiline
+ * annotation
  */
 
 @function testFunction(){
+
+}
+
+/**
+ * Test a function
+ * @annotationTest
+ */
+
+@function test-dash(){
 
 }
 
@@ -22,4 +36,16 @@
  * Test a variable
  * @annotationTest
  */
-$testVariable : "value"
+$testVariable : "value";
+
+/**
+ * Test a variable
+ * @annotationTest
+ */
+$globalVar : "value" !global;
+
+/**
+ * Test a variable
+ * @annotationTest
+ */
+$dash-test : "value" !global;

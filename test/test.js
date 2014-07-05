@@ -16,6 +16,9 @@ describe('ScssCommentParser', function(){
     },
     annotationTest : function ( commentLine ){
       return "Working";
+    },
+    multiline : function( commentLine ){
+      return commentLine;
     }
   };
 
@@ -25,8 +28,18 @@ describe('ScssCommentParser', function(){
     it('should group comments by context type', function(){
      var result = parser.parse ( scss );
          assert.equal(result.mixin.length , 1);
-         assert.equal(result['function'].length , 1);
-         assert.equal(result.variable.length , 1);
+         assert.equal(result['function'].length , 2);
+         assert.equal(result.variable.length , 3);
+    });
+
+    it('should allow dash in function/mixin name', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result['function'][1].context.name , 'test-dash');
+    });
+
+    it('should group multiple lines after a annotation', function(){
+      var result = parser.parse ( scss );
+      assert.equal(result['function'][0].multiline[0], '\nThis is a\nmultiline\nannotation\n ');
     });
 
     it('should join lines without annotation into description', function(){
@@ -46,6 +59,21 @@ describe('ScssCommentParser', function(){
          assert.equal(result.mixin[0].context.name , 'testMixin');
          assert.equal(result['function'][0].context.name , 'testFunction');
          assert.equal(result.variable[0].context.name , 'testVariable');
+    });
+
+    it('should attach the value to a variable', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result.variable[0].context.value , '"value"');
+    });
+
+    it('should explode the global flag', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result.variable[1].context.value , '"value"');
+    });
+
+    it('should allow dashes in variables', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result.variable[2].context.value , '"value"');
     });
 
   });
