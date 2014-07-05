@@ -31,7 +31,7 @@ var scssContextParser = (function () {
   return parser;
 })();
 
-var filterAndGroup = function( lines ){
+var filterAndGroup = function(lines){
   var nLines = [];
   var group = false;
   lines.forEach(function(line){

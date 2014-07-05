@@ -33,6 +33,25 @@
 
 
 /**
+ * Parse multiple multiline annotations See #3
+ *
+ * @multiline
+ * This is a
+ * multiline
+ * annotation
+ *
+ * @multiline
+ * This is a
+ * multiline
+ * annotation
+ */
+
+@function testMultiline(){
+
+}
+
+
+/**
  * Test a variable
  * @annotationTest
  */

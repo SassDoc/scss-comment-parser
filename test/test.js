@@ -28,7 +28,7 @@ describe('ScssCommentParser', function(){
     it('should group comments by context type', function(){
      var result = parser.parse ( scss );
          assert.equal(result.mixin.length , 1);
-         assert.equal(result['function'].length , 2);
+         assert.equal(result['function'].length , 3);
          assert.equal(result.variable.length , 4);
     });
 
@@ -39,7 +39,7 @@ describe('ScssCommentParser', function(){
 
     it('should group multiple lines after a annotation', function(){
       var result = parser.parse ( scss );
-      assert.equal(result['function'][0].multiline[0], '\nThis is a\nmultiline\nannotation\n ');
+      assert.equal(result['function'][0].multiline[0], '\nThis is a\nmultiline\nannotation');
     });
 
     it('should join lines without annotation into description', function(){
@@ -80,6 +80,13 @@ describe('ScssCommentParser', function(){
      var result = parser.parse ( scss );
         assert.equal(result.variable[3].context.name, 'map');
         assert.equal(result.variable[3].context.value, '(\n  \"a\": \"b\",\n  \"c\": \"\"\n)');
+    });
+
+    it('should parse multiple multiline annotations', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result['function'][2].context.name , 'testMultiline');
+         assert.deepEqual(result['function'][2].multiline , [ '\nThis is a\nmultiline\nannotation\n',
+                                                              '\nThis is a\nmultiline\nannotation']);
     });
 
   });
