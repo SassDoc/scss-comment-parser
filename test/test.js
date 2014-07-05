@@ -29,7 +29,7 @@ describe('ScssCommentParser', function(){
      var result = parser.parse ( scss );
          assert.equal(result.mixin.length , 1);
          assert.equal(result['function'].length , 2);
-         assert.equal(result.variable.length , 3);
+         assert.equal(result.variable.length , 4);
     });
 
     it('should allow dash in function/mixin name', function(){
@@ -66,7 +66,7 @@ describe('ScssCommentParser', function(){
          assert.equal(result.variable[0].context.value , '"value"');
     });
 
-    it('should explode the global flag', function(){
+    it('should exclude the global flag', function(){
      var result = parser.parse ( scss );
          assert.equal(result.variable[1].context.value , '"value"');
     });
@@ -74,6 +74,12 @@ describe('ScssCommentParser', function(){
     it('should allow dashes in variables', function(){
      var result = parser.parse ( scss );
          assert.equal(result.variable[2].context.value , '"value"');
+    });
+
+    it('should parse pretty printed vars', function(){
+     var result = parser.parse ( scss );
+        assert.equal(result.variable[3].context.name, 'map');
+        assert.equal(result.variable[3].context.value, '(\n  \"a\": \"b\",\n  \"c\": \"\"\n)');
     });
 
   });

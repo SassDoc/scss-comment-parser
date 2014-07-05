@@ -4,7 +4,7 @@ var CDocParser = require('cdocparser');
  * SCSS Context Parser
  */
 var scssContextParser = (function () {
-  var ctxRegEx = /(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|\s*\:(.*?)(?:\s!global)?\;)?/m;
+  var ctxRegEx = /(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!global)?\;)?/;
   var parser = function (ctxCode) {
     var match = ctxRegEx.exec(ctxCode);
     var context = {};

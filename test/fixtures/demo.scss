@@ -49,3 +49,12 @@ $globalVar : "value" !global;
  * @annotationTest
  */
 $dash-test : "value" !global;
+
+
+/**
+ * Test pretty print See #2
+ */
+$map: (
+  "a": "b",
+  "c": ""
+);
