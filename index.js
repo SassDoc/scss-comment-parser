@@ -18,7 +18,7 @@ var scssContextParser = (function () {
         case "$":
           context.type = 'variable';
           context.name = match[2];
-          context.value = match[4].trim();
+          context.value = match[4].replace(/^\s+|\s+$/g,'');
           context.scope = match[5] || 'private';
           break;
         default:
@@ -40,10 +40,10 @@ var filterAndGroup = function(lines){
     var isAnnotation = trimedLine.indexOf('@') === 0;
     if (trimedLine.indexOf('---') !== 0) { // Ignore lines that start with "---"
       if (group){
-        if ( isAnnotation ) {
+        if ( isAnnotation ) {
           nLines.push(line);
         } else {
-          nLines[nLines.length - 1] += '\n' + line;
+          nLines[nLines.length - 1] += '\n' + line ;
         }
       } else if (isAnnotation) {
         group = true;
