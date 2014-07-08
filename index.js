@@ -8,21 +8,17 @@ var scssContextParser = (function () {
   var parser = function (ctxCode) {
     var match = ctxRegEx.exec(ctxCode);
     var context = {};
-
     if (match) {
-      switch (match[1]) {
-        case "@": // Mixin/function
-          context.type = match[2];
-          context.name = match[3];
-          break;
-        case "$":
-          context.type = 'variable';
-          context.name = match[2];
-          context.value = match[4].replace(/^\s+|\s+$/g,'');
-          context.scope = match[5] || 'private';
-          break;
-        default:
-          context.type = 'unknown';
+      if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')){
+        context.type = match[2];
+        context.name = match[3];
+      } else if (match[1] === '$') {
+        context.type = 'variable';
+        context.name = match[2];
+        context.value = match[4].trim();
+        context.scope = match[5] || 'private';
+      } else {
+        context.type = 'unknown';
       }
     }
 

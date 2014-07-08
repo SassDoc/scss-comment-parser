@@ -27,9 +27,10 @@ describe('ScssCommentParser', function(){
   describe('#parse', function(){
     it('should group comments by context type', function(){
      var result = parser.parse ( scss );
-         assert.equal(result.mixin.length , 1);
-         assert.equal(result['function'].length , 3);
-         assert.equal(result.variable.length , 4);
+         assert.equal(result.mixin.length, 1);
+         assert.equal(result['function'].length, 3);
+         assert.equal(result.variable.length, 4);
+         assert.equal(result.unknown.length, 1);
     });
 
     it('should allow dash in function/mixin name', function(){
