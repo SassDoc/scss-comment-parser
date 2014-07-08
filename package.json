@@ -13,7 +13,7 @@
   "author": "Fabrice Weinberg <Fabrice@weinberg.me>",
   "license": "MIT",
   "dependencies": {
-    "cdocparser": "0.0.11"
+    "cdocparser": "0.0.12"
   },
   "devDependencies": {
     "assert": "^1.1.1"
