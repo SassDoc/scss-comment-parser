@@ -1,7 +1,7 @@
 ScssCommentParser
 ---
 
-Parser `/** */` comments and extracts context from scss.
+Parse `/** */` comments and extracts context from SCSS.
 
 
 ## Install
@@ -16,13 +16,13 @@ npm install --save scsscommentparser
 var ScssCommentParser = require('scsscommentparser');
 
 var annotations = {
-  _ : {
-    alias : {
-      "aliasTest" : "annotationTest"
+  _: {
+    alias: {
+      'aliasTest': 'annotationTest'
     }
   },
-  annotationTest : function ( commentLine ){
-    return "Working";
+  annotationTest: function ( commentLine ) {
+    return 'Working';
   }
 };
 
