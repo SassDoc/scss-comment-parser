@@ -7,7 +7,10 @@ var scssContextParser = (function () {
   var ctxRegEx = /(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
   var parser = function (ctxCode) {
     var match = ctxRegEx.exec(ctxCode);
-    var context = {};
+    var context = {
+      type : 'unknown'
+    };
+
     if (match) {
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')){
         context.type = match[2];
@@ -17,8 +20,6 @@ var scssContextParser = (function () {
         context.name = match[2];
         context.value = match[4].trim();
         context.scope = match[5] || 'private';
-      } else {
-        context.type = 'unknown';
       }
     }
 
