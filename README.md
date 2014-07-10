@@ -1,4 +1,4 @@
-ScssCommentParser
+scss-comment-parser
 ---
 
 Parse `/** */` comments and extracts context from SCSS.
