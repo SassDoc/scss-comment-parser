@@ -34,3 +34,12 @@ var comments = parser.parse ( scss );
 
 console.log(comments);
 ```
+
+
+## Changelog
+
+#### `0.1.1`
+  * Fix multiline annotations to include `@`
+
+#### `0.1.0`
+  * Inital release
