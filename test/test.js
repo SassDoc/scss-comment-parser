@@ -40,7 +40,7 @@ describe('ScssCommentParser', function(){
 
     it('should group multiple lines after a annotation', function(){
       var result = parser.parse ( scss );
-      assert.equal(result['function'][0].multiline[0], '\nThis is a\nmultiline\nannotation');
+      assert.equal(result['function'][0].multiline[0], '\n @test\n This is a\n multiline\n annotation');
     });
 
     it('should join lines without annotation into description', function(){

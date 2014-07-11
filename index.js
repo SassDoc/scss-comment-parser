@@ -1,5 +1,4 @@
 var CDocParser = require('cdocparser');
-
 /**
  * SCSS Context Parser
  */
@@ -33,9 +32,8 @@ var filterAndGroup = function(lines){
   var nLines = [];
   var group = false;
   lines.forEach(function(line){
-    var trimedLine = line.trim();
-    var isAnnotation = trimedLine.indexOf('@') === 0;
-    if (trimedLine.indexOf('---') !== 0) { // Ignore lines that start with "---"
+    var isAnnotation = line.indexOf('@') === 0;
+    if (line.trim().indexOf('---') !== 0) { // Ignore lines that start with "---"
       if (group){
         if ( isAnnotation ) {
           nLines.push(line);
