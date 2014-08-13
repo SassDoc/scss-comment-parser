@@ -1,4 +1,14 @@
 /**
+ * Ignore this
+ */
+
+
+.test{
+
+}
+
+
+/**
  * Partials
  */
 @import "partials/header";
@@ -11,7 +21,7 @@
  * @aliasTest
  */
 @mixin testMixin(){
-
+  $some : "code";
 }
 
 
@@ -26,7 +36,7 @@
  */
 
 @function testFunction(){
-
+  $some : "code";
 }
 
 /**

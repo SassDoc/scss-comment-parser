@@ -38,6 +38,15 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.2.2`
+  * Added `context.code` to type `function` and `mixin` containing the whole code. 
+
+### `0.2.1`
+  * Fix bug in detection of comment blocks
+
+#### `0.1.2`
+  * Update dependencys
+
 #### `0.1.1`
   * Fix multiline annotations to include `@`
 

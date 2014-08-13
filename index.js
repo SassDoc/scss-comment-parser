@@ -3,9 +3,9 @@ var CDocParser = require('cdocparser');
  * SCSS Context Parser
  */
 var scssContextParser = (function () {
-  var ctxRegEx = /(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
+  var ctxRegEx = /^(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
   var parser = function (ctxCode) {
-    var match = ctxRegEx.exec(ctxCode);
+    var match = ctxRegEx.exec(ctxCode.trim());
     var context = {
       type : 'unknown'
     };
@@ -14,6 +14,7 @@ var scssContextParser = (function () {
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')){
         context.type = match[2];
         context.name = match[3];
+        context.code = /\{[\s]*([\s\S]*?)[\s]*\}/.exec(ctxCode)[1];
       } else if (match[1] === '$') {
         context.type = 'variable';
         context.name = match[2];

@@ -14,11 +14,15 @@ describe('ScssCommentParser', function(){
         "aliasTest" : "annotationTest"
       }
     },
-    annotationTest : function ( commentLine ){
-      return "Working";
+    annotationTest : {
+      parse : function ( commentLine ){
+        return "Working";
+      }
     },
-    multiline : function( commentLine ){
-      return commentLine;
+    multiline : {
+      parse : function( commentLine ){
+        return commentLine;
+      }
     }
   };
 
@@ -30,7 +34,13 @@ describe('ScssCommentParser', function(){
          assert.equal(result.mixin.length, 1);
          assert.equal(result['function'].length, 3);
          assert.equal(result.variable.length, 4);
-         assert.equal(result.unknown.length, 1);
+         assert.equal(result.unknown.length, 2);
+    });
+
+    it('should contain the whole code in `context.code` function and mixin', function(){
+     var result = parser.parse ( scss );
+         assert.equal(result['function'][0].context.code , '$some : "code";');
+         assert.equal(result.mixin[0].context.code , '$some : "code";');
     });
 
     it('should allow dash in function/mixin name', function(){
