@@ -42,15 +42,21 @@ var extractCode = function (code, offset) {
     if (!inString) {
       if (c === '/' && cn === '/' && !inComment) {
         // Swallow line comment
-        cursor += code.substr(cursor).search(/[\r\n]/);
+        cursor = Math.min(
+          Math.max(code.indexOf('\r', cursor), code.indexOf('\n', cursor)),
+          length
+        );
+        continue;
       } else if (c === '/' && cn === '*') {
         // Block comment: begin
         cursor += 2; // Swallow opening
         inComment = true;
+        continue;
       } else if (c === '*' && cn === '/') {
         // Block comment: end
         cursor += 2; // Swallow closing
         inComment = false;
+        continue;
       }
     }
 
@@ -60,9 +66,13 @@ var extractCode = function (code, offset) {
           // String: begin
           openChar = c;
           inString = true;
+          cursor++;
+          continue;
         } else if (openChar === c) {
           // String: end
           inString = false;
+          cursor++;
+          continue;
         }
       }
     }
