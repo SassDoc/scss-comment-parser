@@ -1,57 +1,86 @@
 var CDocParser = require('cdocparser');
 
-var extractCode = function(code, offset){
-  offset = offset || 0;
+/**
+ * Extract the code following `offset` in `code` buffer,
+ * delimited by braces.
+ *
+ * `offset` should be set to the position of the opening brace. If not,
+ * the function will jump to the next opening brace.
+ *
+ * @param {String} code Code buffer.
+ * @param {Number} offset Index of the opening brace.
+ * @return {String} Extracted code between braces.
+ */
+var extractCode = function (code, offset) {
+  offset = offset || 0;
+
+  if (code[offset] !== '{') {
+    // The position is not valid, jump to next opening brace
+    offset = code.indexOf('{', offset);
+  }
+
   var start = offset;
   var cursor = offset;
-  var depth = 1;
+  var depth = 0;
   var length = code.length;
 
   var inString = false;
   var openChar = '';
 
+  // In block comment (line comments are instantly consumed)
   var inComment = false;
-  var bComment = false;
-  var lComment = false;
 
-  cursor++; // Ignore the first brace
+  // Consume the first brace
+  cursor++;
+  depth++;
 
   while (cursor < length && depth > 0) {
-    var cb = code[cursor-1];
-    var c = code[cursor];
-    var cn = code[cursor+1];
+    var cb = code[cursor - 1]; // Char before
+    var c = code[cursor]; // Char
+    var cn = code[cursor + 1]; // Char next
 
-    if (!inString){
-      if (c === '/' && cn === '/' && !bComment) { // line comment: begin
-        cursor++; // swallow
-        inComment = lComment = true;
-      } else if ((c === '\n' || c === '\r') && lComment && !bComment) {
-        lComment = inComment = false;
-      } else if (c === '/' && cn === '*') {       // block comment: begin
-        cursor++; // swallow
-        bComment = true;
-        inComment = !lComment;
-      } else if (c === '*' && cn === '/') {       // block comment: begin
-        cursor++; // swallow
-        inComment = bComment = lComment;
+    if (!inString) {
+      if (c === '/' && cn === '/' && !inComment) {
+        // Swallow line comment
+        cursor = Math.min(
+          Math.max(code.indexOf('\r', cursor), code.indexOf('\n', cursor)),
+          length
+        );
+        continue;
+      } else if (c === '/' && cn === '*') {
+        // Block comment: begin
+        cursor += 2; // Swallow opening
+        inComment = true;
+        continue;
+      } else if (c === '*' && cn === '/') {
+        // Block comment: end
+        cursor += 2; // Swallow closing
+        inComment = false;
+        continue;
       }
     }
 
-    if (!inComment && cb !== '\\') {  // in String
-      if (c === '"' || c === '\'') {
+    if (!inComment) {
+      if ((c === '"' || c === '\'') && cb !== '\\') {
         if (!inString) {
+          // String: begin
           openChar = c;
           inString = true;
-        } else if (openChar === c){
+          cursor++;
+          continue;
+        } else if (openChar === c) {
+          // String: end
           inString = false;
+          cursor++;
+          continue;
         }
       }
     }
 
-    if (!(inString || inComment)){
-      if (c === '{'){
+    if (!(inString || inComment)) {
+      if (c === '{') {
         depth++;
-      } else if (c === '}'){
+      } else if (c === '}') {
         depth--;
       }
     }
@@ -59,13 +88,12 @@ var extractCode = function(code, offset){
     cursor++;
   }
 
-  if (depth > 0){
+  if (depth > 0) {
     return '';
   }
 
   return code.substring(start, cursor);
 };
-
 
 /**
  * SCSS Context Parser
@@ -78,8 +106,8 @@ var scssContextParser = (function () {
       type : 'unknown'
     };
 
-    if (match) {
-      if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')){
+    if (match) {
+      if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')) {
         context.type = match[2];
         context.name = match[3];
         var codeStart = ctxCode.indexOf('{', match.index + match[0].length);
@@ -100,10 +128,10 @@ var scssContextParser = (function () {
   return parser;
 })();
 
-var filterAndGroup = function(lines){
+var filterAndGroup = function (lines) {
   var nLines = [];
   var group = false;
-  lines.forEach(function(line){
+  lines.forEach(function (line){
     var isAnnotation = line.indexOf('@') === 0;
     if (line.trim().indexOf('---') !== 0) { // Ignore lines that start with "---"
       if (group){
@@ -129,9 +157,9 @@ var Parser = function (annotations) {
   this.commentParser = new CDocParser.CommentParser(annotations);
 };
 
-Parser.prototype.parse = function(code){
+Parser.prototype.parse = function (code){
   var comments = extractor.extract(code);
-  comments.forEach(function(comment){
+  comments.forEach(function (comment){
     comment.lines = filterAndGroup(comment.lines);
   });
   return this.commentParser.parse(comments);
