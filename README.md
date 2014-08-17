@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.2.3`
+  * Fixed wrong code extraction for `function` and `mixin`. (See [#11](https://github.com/SassDoc/scss-comment-parser/issues/11))
+
 #### `0.2.2`
   * Added `context.code` to type `function` and `mixin` containing the whole code. 
 
