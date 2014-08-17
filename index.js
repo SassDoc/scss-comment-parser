@@ -1,4 +1,72 @@
 var CDocParser = require('cdocparser');
+
+var extractCode = function(code, offset){
+  offset = offset || 0;
+  var start = offset;
+  var cursor = offset;
+  var depth = 1;
+  var length = code.length;
+
+  var inString = false;
+  var openChar = '';
+
+  var inComment = false;
+  var bComment = false;
+  var lComment = false;
+
+  cursor++; // Ignore the first brace
+
+  while (cursor < length && depth > 0) {
+    var cb = code[cursor-1];
+    var c = code[cursor];
+    var cn = code[cursor+1];
+
+    if (!inString){
+      if (c === '/' && cn === '/' && !bComment) { // line comment: begin
+        cursor++; // swallow
+        inComment = lComment = true;
+      } else if ((c === '\n' || c === '\r') && lComment && !bComment) {
+        lComment = inComment = false;
+      } else if (c === '/' && cn === '*') {       // block comment: begin
+        cursor++; // swallow
+        bComment = true;
+        inComment = !lComment;
+      } else if (c === '*' && cn === '/') {       // block comment: begin
+        cursor++; // swallow
+        inComment = bComment = lComment;
+      }
+    }
+
+    if (!inComment && cb !== '\\') {  // in String
+      if (c === '"' || c === '\'') {
+        if (!inString) {
+          openChar = c;
+          inString = true;
+        } else if (openChar === c){
+          inString = false;
+        }
+      }
+    }
+
+    if (!(inString || inComment)){
+      if (c === '{'){
+        depth++;
+      } else if (c === '}'){
+        depth--;
+      }
+    }
+
+    cursor++;
+  }
+
+  if (depth > 0){
+    return '';
+  }
+
+  return code.substring(start, cursor);
+};
+
+
 /**
  * SCSS Context Parser
  */
@@ -14,7 +82,10 @@ var scssContextParser = (function () {
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')){
         context.type = match[2];
         context.name = match[3];
-        context.code = /\{[\s]*([\s\S]*?)[\s]*\}/.exec(ctxCode)[1];
+        var codeStart = ctxCode.indexOf('{', match.index + match[0].length);
+        if (codeStart >= 0) {
+          context.code = extractCode(ctxCode, codeStart);
+        }
       } else if (match[1] === '$') {
         context.type = 'variable';
         context.name = match[2];
@@ -65,5 +136,7 @@ Parser.prototype.parse = function(code){
   });
   return this.commentParser.parse(comments);
 };
+
+Parser.prototype.extractCode = extractCode;
 
 module.exports = Parser;

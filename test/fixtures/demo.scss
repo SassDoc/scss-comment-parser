@@ -21,7 +21,9 @@
  * @aliasTest
  */
 @mixin testMixin(){
-  $some : "code";
+  $some : "code}}";
+  /* } */
+  // }
 }
 
 
