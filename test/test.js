@@ -37,8 +37,8 @@ describe('ScssCommentParser', function () {
 
     it('should contain the whole code in `context.code` function and mixin', function () {
       var result = parser.parse(scss);
-      assert.equal(result['function'][0].context.code, '{\n  $some : "code";\n}');
-      assert.equal(result.mixin[0].context.code, '{\n  $some : "code}}";\n  /* } */\n  // }\n}');
+      assert.equal(result['function'][0].context.code, '\n  $some : "code";\n');
+      assert.equal(result.mixin[0].context.code, '\n  $some : "code}}";\n  /* } */\n  // }\n');
     });
 
     it('should allow dash in function/mixin name', function () {
@@ -110,12 +110,12 @@ describe('ScssCommentParser', function () {
 
   describe('#extractCode', function () {
     it('should extract a code block', function () {
-      assert.equal(parser.extractCode('{{ test }}'), '{{ test }}');
-      assert.equal(parser.extractCode('{{ test }} ignore'), '{{ test }}');
-      assert.equal(parser.extractCode('{{ te"te}}st"st }} ignore'), '{{ te"te}}st"st }}');
-      assert.equal(parser.extractCode('{{ te\'te}}st\'st }} ignore'), '{{ te\'te}}st\'st }}');
-      assert.equal(parser.extractCode('{{ // }\n }} ignore'), '{{ // }\n }}');
-      assert.equal(parser.extractCode('{{ /* }} */ }}'), '{{ /* }} */ }}');
+      assert.equal(parser.extractCode('{{ test }}'), '{ test }');
+      assert.equal(parser.extractCode('{{ test }} ignore'), '{ test }');
+      assert.equal(parser.extractCode('{{ te"te}}st"st }} ignore'), '{ te"te}}st"st }');
+      assert.equal(parser.extractCode('{{ te\'te}}st\'st }} ignore'), '{ te\'te}}st\'st }');
+      assert.equal(parser.extractCode('{{ // }\n }} ignore'), '{ // }\n }');
+      assert.equal(parser.extractCode('{{ /* }} */ }}'), '{ /* }} */ }');
     });
   });
 });
