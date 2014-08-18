@@ -39,7 +39,7 @@ console.log(comments);
 ## Changelog
 
 #### `0.2.4`
-  * Remove first opening and last closing brace in `context.code
+  * Remove first opening and last closing brace in `context.code`
 
 #### `0.2.3`
   * Fixed wrong code extraction for `function` and `mixin`. (See [#11](https://github.com/SassDoc/scss-comment-parser/issues/11))
