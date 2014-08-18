@@ -19,9 +19,9 @@ var extractCode = function (code, offset) {
     offset = code.indexOf('{', offset);
   }
 
-  var start = offset;
-  var cursor = offset;
-  var depth = 0;
+  var start = offset + 1; // Ignore the opening brace
+  var cursor = start;
+  var depth = 1; // The opening brace is consumed
   var length = code.length;
 
   var inString = false;
@@ -29,10 +29,6 @@ var extractCode = function (code, offset) {
 
   // In block comment (line comments are instantly consumed)
   var inComment = false;
-
-  // Consume the first brace
-  cursor++;
-  depth++;
 
   while (cursor < length && depth > 0) {
     var cb = code[cursor - 1]; // Char before
@@ -91,6 +87,9 @@ var extractCode = function (code, offset) {
   if (depth > 0) {
     return '';
   }
+
+  // Ignore the closing brace
+  cursor--;
 
   return code.substring(start, cursor);
 };
