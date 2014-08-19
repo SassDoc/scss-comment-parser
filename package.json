@@ -1,6 +1,6 @@
 {
   "name": "scss-comment-parser",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Parses scss comments to build documentation",
   "main": "index.js",
   "repository": {
@@ -11,6 +11,9 @@
     "test": "mocha test"
   },
   "author": "Fabrice Weinberg <Fabrice@weinberg.me>",
+  "contributors": [
+    "Callum Jefferies <callum@callumj.uk>"
+  ],
   "license": "MIT",
   "dependencies": {
     "cdocparser": "^0.1.0"

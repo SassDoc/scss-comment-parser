@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.3.0`
+  * Add placeholder support (thanks to [callum](https://github.com/callum))
+
 #### `0.2.4`
   * Remove first opening and last closing brace in `context.code`
 
@@ -57,4 +60,4 @@ console.log(comments);
   * Fix multiline annotations to include `@`
 
 #### `0.1.0`
-  * Inital release
+  * Initial release
