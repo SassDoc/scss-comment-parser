@@ -31,6 +31,7 @@ describe('ScssCommentParser', function () {
       var result = parser.parse(scss);
       assert.equal(result.mixin.length, 1);
       assert.equal(result['function'].length, 3);
+      assert.equal(result.placeholder.length, 1);
       assert.equal(result.variable.length, 4);
       assert.equal(result.unknown.length, 2);
     });
@@ -67,6 +68,7 @@ describe('ScssCommentParser', function () {
       var result = parser.parse(scss);
       assert.equal(result.mixin[0].context.name, 'testMixin');
       assert.equal(result['function'][0].context.name, 'testFunction');
+      assert.equal(result.placeholder[0].context.name , 'testPlaceholder');
       assert.equal(result.variable[0].context.name, 'testVariable');
     });
 

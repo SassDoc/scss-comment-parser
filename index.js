@@ -98,7 +98,7 @@ var extractCode = function (code, offset) {
  * SCSS Context Parser
  */
 var scssContextParser = (function () {
-  var ctxRegEx = /^(@|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
+  var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
   var parser = function (ctxCode) {
     var match = ctxRegEx.exec(ctxCode.trim());
     var context = {
@@ -113,6 +113,9 @@ var scssContextParser = (function () {
         if (codeStart >= 0) {
           context.code = extractCode(ctxCode, codeStart);
         }
+      } else if (match[1] === '%') {
+        context.type = 'placeholder';
+        context.name = match[2];
       } else if (match[1] === '$') {
         context.type = 'variable';
         context.name = match[2];
