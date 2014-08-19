@@ -1,4 +1,4 @@
-scss-comment-parser
+scss-comment-parser [![Build Status](https://travis-ci.org/SassDoc/scss-comment-parser.svg?branch=master)](https://travis-ci.org/SassDoc/scss-comment-parser)
 ---
 
 Parse `/** */` comments and extracts context from SCSS.
