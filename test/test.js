@@ -108,6 +108,13 @@ describe('ScssCommentParser', function () {
       assert.equal(result.variable[1].context.scope , 'global');
     });
 
+    it('should warn if annotation was not found', function (done) {
+      parser.commentParser.on('warning', function(err){
+        assert.equal(err + '', 'Error: Parser for annotation `unkownAnnotation` not found.');
+        done();
+      });
+      var result = parser.parse('/**\n *@unkownAnnotation */\n.obj{\n\n}');
+    });
   });
 
   describe('#extractCode', function () {

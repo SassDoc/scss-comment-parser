@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.3.1`
+  * Update to [`cdocparser`](https://github.com/FWeinb/CDocParser) 0.2.1 
+
 #### `0.3.0`
   * Add placeholder support (thanks to [callum](https://github.com/callum))
 
