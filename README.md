@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.3.2`
+  * Added `context.code` to type `placeholder`.
+
 #### `0.3.1`
   * Update to [`cdocparser`](https://github.com/FWeinb/CDocParser) 0.2.1 
 
