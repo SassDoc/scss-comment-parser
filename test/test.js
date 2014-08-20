@@ -39,6 +39,7 @@ describe('ScssCommentParser', function () {
     it('should contain the whole code in `context.code` function and mixin', function () {
       var result = parser.parse(scss);
       assert.equal(result['function'][0].context.code, '\n  $some : "code";\n');
+      assert.equal(result.placeholder[0].context.code, '\n  $some : "code";\n');
       assert.equal(result.mixin[0].context.code, '\n  $some : "code}}";\n  /* } */\n  // }\n');
     });
 
