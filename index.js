@@ -94,6 +94,13 @@ var extractCode = function (code, offset) {
   return code.substring(start, cursor);
 };
 
+var addCodeToContext = function(context, ctxCode, match){
+  var codeStart = ctxCode.indexOf('{', match.index);
+  if (codeStart >= 0) {
+    context.code = extractCode(ctxCode, codeStart);
+  }
+};
+
 /**
  * SCSS Context Parser
  */
@@ -109,13 +116,11 @@ var scssContextParser = (function () {
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')) {
         context.type = match[2];
         context.name = match[3];
-        var codeStart = ctxCode.indexOf('{', match.index + match[0].length);
-        if (codeStart >= 0) {
-          context.code = extractCode(ctxCode, codeStart);
-        }
+        addCodeToContext(context, ctxCode, match);
       } else if (match[1] === '%') {
         context.type = 'placeholder';
         context.name = match[2];
+        addCodeToContext(context, ctxCode, match);
       } else if (match[1] === '$') {
         context.type = 'variable';
         context.name = match[2];
