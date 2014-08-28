@@ -32,7 +32,7 @@ describe('ScssCommentParser', function () {
       assert.equal(result.mixin.length, 1);
       assert.equal(result['function'].length, 3);
       assert.equal(result.placeholder.length, 1);
-      assert.equal(result.variable.length, 4);
+      assert.equal(result.variable.length, 5);
       assert.equal(result.unknown.length, 2);
     });
 
@@ -115,6 +115,11 @@ describe('ScssCommentParser', function () {
         done();
       });
       var result = parser.parse('/**\n *@unkownAnnotation */\n.obj{\n\n}');
+    });
+
+    it('should work with semicolons in strings', function () {
+      var result = parser.parse(scss);
+      assert.equal(result.variable[4].context.value, 'url(\'data:image/svg+xml;base64,asdfasdf\')');
     });
   });
 

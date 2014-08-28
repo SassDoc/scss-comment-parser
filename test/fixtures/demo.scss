@@ -105,3 +105,8 @@ $map: (
   "a": "b",
   "c": ""
 );
+
+/**
+ * Test context contains `;`.
+ */
+ $string: url('data:image/svg+xml;base64,asdfasdf');
