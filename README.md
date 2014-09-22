@@ -56,7 +56,7 @@ console.log(comments);
 #### `0.2.2`
   * Added `context.code` to type `function` and `mixin` containing the whole code. 
 
-### `0.2.1`
+#### `0.2.1`
   * Fix bug in detection of comment blocks
 
 #### `0.1.2`
