@@ -172,6 +172,7 @@ Parser.prototype.parse = function (code){
   return this.commentParser.parse(comments);
 };
 
+Parser.prototype.contextParser = scssContextParser;
 Parser.prototype.extractCode = extractCode;
 
 module.exports = Parser;
