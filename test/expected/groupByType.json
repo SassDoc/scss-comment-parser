@@ -4,10 +4,13 @@
          "description":"\n",
          "context":{
             "type":"variable",
-            "line":4,
             "name":"var",
             "value":"'name'",
-            "scope":"private"
+            "scope":"private",
+            "line":{
+               "start":4,
+               "end":4
+            }
          }
       }
    ],
@@ -16,9 +19,12 @@
          "description":"\n",
          "context":{
             "type":"function",
-            "line":9,
             "name":"name",
-            "code":"\n  $some : 'code';\n"
+            "code":"\n  $some : 'code';\n",
+            "line":{
+               "start":9,
+               "end":11
+            }
          }
       }
    ],
@@ -27,9 +33,12 @@
          "description":"\n",
          "context":{
             "type":"mixin",
-            "line":16,
             "name":"mixin",
-            "code":"\n\n"
+            "code":"\n\n",
+            "line":{
+               "start":16,
+               "end":18
+            }
          }
       }
    ],
@@ -38,9 +47,12 @@
          "description":"\n",
          "context":{
             "type":"placeholder",
-            "line":23,
             "name":"placeholder",
-            "code":"\n\n"
+            "code":"\n\n",
+            "line":{
+               "start":23,
+               "end":25
+            }
          }
       }
    ]

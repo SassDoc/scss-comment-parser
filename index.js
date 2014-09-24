@@ -98,6 +98,7 @@ var addCodeToContext = function(context, ctxCode, match){
   var codeStart = ctxCode.indexOf('{', match.index);
   if (codeStart >= 0) {
     context.code = extractCode(ctxCode, codeStart);
+    return codeStart + context.code.length + 1; // Add closing brace!
   }
 };
 
@@ -107,29 +108,36 @@ var addCodeToContext = function(context, ctxCode, match){
 var scssContextParser = (function () {
   var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
   var parser = function (ctxCode, lineNumberFor) {
-    var code = ctxCode.trim();
-    var match = ctxRegEx.exec(code);
+    var match = ctxRegEx.exec(ctxCode.trim());
+
     var context = {
       type : 'unknown'
     };
 
     if (match) {
-      if (lineNumberFor !== undefined) {
-        context.line = lineNumberFor(match.index);
-      }
+      var wsOffset = Math.min(ctxCode.match(/\s*/).length - 1, 0);
+      var startIndex = wsOffset + match.index;
+      var endIndex = startIndex + match[0].length;
+
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')) {
         context.type = match[2];
         context.name = match[3];
-        addCodeToContext(context, ctxCode, match);
+        endIndex = addCodeToContext(context, ctxCode, match);
       } else if (match[1] === '%') {
         context.type = 'placeholder';
         context.name = match[2];
-        addCodeToContext(context, ctxCode, match);
+        endIndex = addCodeToContext(context, ctxCode, match);
       } else if (match[1] === '$') {
         context.type = 'variable';
         context.name = match[2];
         context.value = match[4].trim();
         context.scope = match[5] || 'private';
+      }
+      if (lineNumberFor !== undefined) {
+        context.line = {
+          start : lineNumberFor(startIndex),
+          end : lineNumberFor(endIndex)
+        };
       }
     }
 

@@ -143,7 +143,10 @@ describe('ScssCommentParser', function () {
           description : 'Test\nTest\n',
           context : {
             type : 'function',
-            line : 6,
+            line : {
+              start : 6,
+              end : 6
+            },
             name : 'test',
             code : ''
           }
