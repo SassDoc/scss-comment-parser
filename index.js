@@ -106,13 +106,17 @@ var addCodeToContext = function(context, ctxCode, match){
  */
 var scssContextParser = (function () {
   var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
-  var parser = function (ctxCode) {
-    var match = ctxRegEx.exec(ctxCode.trim());
+  var parser = function (ctxCode, lineNumberFor) {
+    var code = ctxCode.trim();
+    var match = ctxRegEx.exec(code);
     var context = {
       type : 'unknown'
     };
 
     if (match) {
+      if (lineNumberFor !== undefined) {
+        context.line = lineNumberFor(match.index);
+      }
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')) {
         context.type = match[2];
         context.name = match[3];

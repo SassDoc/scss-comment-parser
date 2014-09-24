@@ -1,0 +1,47 @@
+{
+   "variable":[
+      {
+         "description":"\n",
+         "context":{
+            "type":"variable",
+            "line":4,
+            "name":"var",
+            "value":"'name'",
+            "scope":"private"
+         }
+      }
+   ],
+   "function":[
+      {
+         "description":"\n",
+         "context":{
+            "type":"function",
+            "line":9,
+            "name":"name",
+            "code":"\n  $some : 'code';\n"
+         }
+      }
+   ],
+   "mixin":[
+      {
+         "description":"\n",
+         "context":{
+            "type":"mixin",
+            "line":16,
+            "name":"mixin",
+            "code":"\n\n"
+         }
+      }
+   ],
+   "placeholder":[
+      {
+         "description":"\n",
+         "context":{
+            "type":"placeholder",
+            "line":23,
+            "name":"placeholder",
+            "code":"\n\n"
+         }
+      }
+   ]
+}

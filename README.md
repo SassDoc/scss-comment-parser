@@ -38,6 +38,10 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.4.0`
+  * Update to `cdocparser@0.4.0` supporting `///` comments
+  * Include a `context.line` for each detected code part
+
 #### `0.3.2`
   * Added `context.code` to type `placeholder`.
 

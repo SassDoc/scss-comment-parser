@@ -128,15 +128,11 @@ describe('ScssCommentParser', function () {
     describe('group by type', function(){
       it('should work with block comments', function(){
         var result = parser.parse(getContent('groupByType.test.scss'));
-        assert.equal(result.mixin.length, 1);
-        assert.equal(result['function'].length, 1);
-        assert.equal(result.placeholder.length, 1);
+        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
       it('should work with mixed comments', function(){
         var result = parser.parse(getContent('groupByTypeMixedComments.test.scss'));
-        assert.equal(result.mixin.length, 1);
-        assert.equal(result['function'].length, 1);
-        assert.equal(result.placeholder.length, 1);
+        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
     });
 
@@ -147,6 +143,7 @@ describe('ScssCommentParser', function () {
           description : 'Test\nTest\n',
           context : {
             type : 'function',
+            line : 6,
             name : 'test',
             code : ''
           }
