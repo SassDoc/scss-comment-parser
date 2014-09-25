@@ -2,128 +2,167 @@ var fs = require('fs');
 var assert = require('assert');
 var ScssCommentParser = require('../');
 
+var getContent = function(file){
+  return fs.readFileSync(__dirname + '/fixtures/'+file, 'utf-8');
+};
+
+
 describe('ScssCommentParser', function () {
-  var scss = fs.readFileSync(__dirname + '/fixtures/demo.scss', 'utf-8');
+  describe('#contextParser', function () {
+    var parser;
 
-  // Test Annotations
-  var annotations = {
-    _: {
-      alias: {
-        'aliasTest': 'annotationTest'
-      }
-    },
-    annotationTest: {
-      parse: function (commentLine) {
-        return 'Working';
-      }
-    },
-    multiline: {
-      parse: function (commentLine) {
-        return commentLine;
-      }
-    }
-  };
-
-  var parser = new ScssCommentParser(annotations);
-
-  describe('#parse', function () {
-    it('should group comments by context type', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.mixin.length, 1);
-      assert.equal(result['function'].length, 3);
-      assert.equal(result.placeholder.length, 1);
-      assert.equal(result.variable.length, 5);
-      assert.equal(result.unknown.length, 2);
+    beforeEach(function(){
+      parser = new ScssCommentParser({});
     });
 
-    it('should contain the whole code in `context.code` function and mixin', function () {
-      var result = parser.parse(scss);
-      assert.equal(result['function'][0].context.code, '\n  $some : "code";\n');
-      assert.equal(result.placeholder[0].context.code, '\n  $some : "code";\n');
-      assert.equal(result.mixin[0].context.code, '\n  $some : "code}}";\n  /* } */\n  // }\n');
-    });
+    describe('placeholder', function(){
+      var expected = {
+        type: 'placeholder',
+        name: 'testPlaceholder',
+        code: '\n  $some : "code";\n'
+      };
 
-    it('should allow dash in function/mixin name', function () {
-      var result = parser.parse(scss);
-      assert.equal(result['function'][1].context.name, 'test-dash');
-    });
-
-    it('should group multiple lines after a annotation', function () {
-      var result = parser.parse(scss);
-      assert.equal(result['function'][0].multiline[0], '\n @test\n This is a\n multiline\n annotation');
-    });
-
-    it('should join lines without annotation into description', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.mixin.length, 1);
-      assert.equal(result.mixin[0].description, 'Test a mixin\n');
-    });
-
-    it('should resolve a alias to the real name', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.mixin.length, 1);
-      assert.equal(result.mixin[0].annotationTest[0], 'Working' );
-    });
-
-    it('should attach correct context', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.mixin[0].context.name, 'testMixin');
-      assert.equal(result['function'][0].context.name, 'testFunction');
-      assert.equal(result.placeholder[0].context.name , 'testPlaceholder');
-      assert.equal(result.variable[0].context.name, 'testVariable');
-    });
-
-    it('should attach the value to a variable', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[0].context.value, '"value"');
-    });
-
-    it('should exclude the global flag', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[1].context.value, '"value"');
-    });
-
-    it('should allow dashes in variables', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[2].context.value, '"value"');
-    });
-
-    it('should parse pretty printed vars', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[3].context.name, 'map');
-      assert.equal(result.variable[3].context.value, '(\n  \"a\": \"b\",\n  \"c\": \"\"\n)');
-    });
-
-    it('should parse multiple multiline annotations', function () {
-      var result = parser.parse(scss);
-      assert.equal(result['function'][2].context.name, 'testMultiline');
-      assert.deepEqual(result['function'][2].multiline, [
-        '\nThis is a\nmultiline\nannotation\n',
-        '\nThis is a\nmultiline\nannotation'
-      ]);
-    });
-
-    it('should include the scope of a variable', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[0].context.scope , 'private');
-      assert.equal(result.variable[1].context.scope , 'global');
-    });
-
-    it('should warn if annotation was not found', function (done) {
-      parser.commentParser.on('warning', function(err){
-        assert.equal(err + '', 'Error: Parser for annotation `unkownAnnotation` not found.');
-        done();
+      it('should detect it', function(){
+        var context = parser.contextParser(getContent('placeholder.test.scss'));
+        assert.deepEqual(context, expected);
       });
-      var result = parser.parse('/**\n *@unkownAnnotation */\n.obj{\n\n}');
+
+      it('should detect it with linebreaks', function(){
+        var context = parser.contextParser(getContent('placeholderLinebreaks.test.scss'));
+        assert.deepEqual(context, expected);
+      });
     });
 
-    it('should work with semicolons in strings', function () {
-      var result = parser.parse(scss);
-      assert.equal(result.variable[4].context.value, 'url(\'data:image/svg+xml;base64,asdfasdf\')');
+    describe('mixin', function(){
+      var expected = {
+        type: 'mixin',
+        name: 'name',
+        code: '\n  $some : "code";\n'
+      };
+
+      it('should detect it', function(){
+        var context = parser.contextParser(getContent('mixin.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+
+      it('should detect it with linebreaks', function(){
+        var context = parser.contextParser(getContent('mixinLinebreaks.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+    });
+
+    describe('function', function(){
+      var expected = {
+        type: 'function',
+        name: 'name',
+        code: '\n  $some : "code";\n'
+      };
+
+      it('should detect it', function(){
+        var context = parser.contextParser(getContent('function.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+
+      it('should detect it with linebreaks', function(){
+        var context = parser.contextParser(getContent('functionLinebreaks.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+    });
+
+    describe('variable', function(){
+      var expected = {
+        type: 'variable',
+        name: 'name',
+        value: '\'value\'',
+        scope: 'private'
+      };
+
+      it('should detect it', function(){
+        var context = parser.contextParser(getContent('variable.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+
+      it('should detect it with linebreaks', function(){
+        var context = parser.contextParser(getContent('variableLinebreaks.test.scss'));
+        assert.deepEqual(context, expected);
+      });
+
+      it('should detect it as global', function(){
+        var context = parser.contextParser(getContent('variableGlobal.test.scss'));
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'name',
+          value: '\'value\'',
+          scope: 'global'
+        });
+      });
+
+      it('should detect it with multiline Value', function(){
+        var context = parser.contextParser(getContent('variableMultilineValue.test.scss'));
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'map',
+          value: '(\n  \"a\": \"b\",\n  \"c\": \"\"\n)',
+          scope: 'private'
+        });
+      });
+    });
+
+    describe('unknown', function(){
+      it('should assing unknown', function(){
+        var context = parser.contextParser(getContent('unknown.test.scss'));
+        assert.deepEqual(context, {
+          type : 'unknown'
+        });
+      });
     });
   });
 
+  describe('#parser', function(){
+    var parser;
+
+    beforeEach(function(){
+      parser = new ScssCommentParser({});
+    });
+
+    describe('group by type', function(){
+      it('should work with block comments', function(){
+        var result = parser.parse(getContent('groupByType.test.scss'));
+        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
+      });
+      it('should work with mixed comments', function(){
+        var result = parser.parse(getContent('groupByTypeMixedComments.test.scss'));
+        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
+      });
+    });
+
+    it('should ignore lines that start with "---"', function(){
+        var result = parser.parse(getContent('ignoreLine.test.scss'));
+        assert.equal(result['function'].length, 1);
+        assert.deepEqual(result['function'][0], {
+          description : 'Test\nTest\n',
+          context : {
+            type : 'function',
+            line : {
+              start : 6,
+              end : 6
+            },
+            name : 'test',
+            code : ''
+          }
+        });
+    });
+
+
+  });
+
   describe('#extractCode', function () {
+    var parser;
+
+    beforeEach(function(){
+      parser = new ScssCommentParser({});
+    });
+
     it('should extract a code block', function () {
       assert.equal(parser.extractCode('{{ test }}'), '{ test }');
       assert.equal(parser.extractCode('{{ test }} ignore'), '{ test }');
