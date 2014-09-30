@@ -106,6 +106,16 @@ describe('ScssCommentParser', function () {
           scope: 'private'
         });
       });
+
+      it('should work for a variable that is build of of variabels', function(){
+        var context = parser.contextParser(getContent('variableAsListOfVariables.test.scss'));
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'badge-xs-padding',
+          value: '$badge-xs-padding-top $badge-xs-padding-right $badge-xs-padding-bottom $badge-xs-padding-left',
+          scope: 'private'
+        });
+      });
     });
 
     describe('unknown', function(){
