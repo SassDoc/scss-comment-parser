@@ -116,6 +116,16 @@ describe('ScssCommentParser', function () {
           scope: 'private'
         });
       });
+
+      it('should work if a line comments is after the variable', function(){
+        var context = parser.contextParser(getContent('commentAfterVariable.test.scss'));
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'var',
+          value: '\'test\'',
+          scope: 'private'
+        });
+      });
     });
 
     describe('unknown', function(){
