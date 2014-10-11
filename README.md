@@ -38,8 +38,12 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.5.0`
+  * Update to `cdocparser@0.4.0
+  * Add support for configuration passed to the extractor.  
+
 #### `0.4.0`
-  * Update to `cdocparser@0.4.0` supporting `///` comments
+  * Update to `cdocparser@0.3.0` supporting `///` comments
   * Include a `context.line` with `start, end` value for each detected code part
 
 #### `0.3.2`
