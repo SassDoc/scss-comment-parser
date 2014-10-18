@@ -135,8 +135,8 @@ var scssContextParser = (function () {
       }
       if (lineNumberFor !== undefined) {
         context.line = {
-          start : lineNumberFor(startIndex),
-          end : lineNumberFor(endIndex)
+          start : lineNumberFor(startIndex) + 1,
+          end : lineNumberFor(endIndex) + 1
         };
       }
     }

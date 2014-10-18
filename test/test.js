@@ -146,12 +146,23 @@ describe('ScssCommentParser', function () {
     });
 
     describe('group by type', function(){
+      var ignoreDescription = function(result){
+        Object.keys(result).forEach(function(key){
+          result[key].forEach(function(item){
+            delete item.description;
+          });
+        });
+        return result;
+      };
+
       it('should work with block comments', function(){
         var result = parser.parse(getContent('groupByType.test.scss'));
+        result = ignoreDescription(result);
         assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
       it('should work with mixed comments', function(){
         var result = parser.parse(getContent('groupByTypeMixedComments.test.scss'));
+        result = ignoreDescription(result);
         assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
     });
@@ -161,6 +172,10 @@ describe('ScssCommentParser', function () {
         assert.equal(result['function'].length, 1);
         assert.deepEqual(result['function'][0], {
           description : 'Test\nTest\n',
+          commentRange: {
+            start:1,
+            end:5
+          },
           context : {
             type : 'function',
             line : {
