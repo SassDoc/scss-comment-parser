@@ -147,10 +147,8 @@ describe('ScssCommentParser', function () {
 
     describe('group by type', function(){
       var ignoreDescription = function(result){
-        Object.keys(result).forEach(function(key){
-          result[key].forEach(function(item){
-            delete item.description;
-          });
+        result.forEach(function(item){
+          delete item.description;
         });
         return result;
       };
@@ -169,8 +167,8 @@ describe('ScssCommentParser', function () {
 
     it('should ignore lines that start with "---"', function(){
         var result = parser.parse(getContent('ignoreLine.test.scss'));
-        assert.equal(result['function'].length, 1);
-        assert.deepEqual(result['function'][0], {
+        assert.equal(result.length, 1);
+        assert.deepEqual(result[0], {
           description : 'Test\nTest\n',
           commentRange: {
             start:1,

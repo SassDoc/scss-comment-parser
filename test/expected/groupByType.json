@@ -1,71 +1,63 @@
-{
-   "variable":[
-      {
-         "commentRange":{
-            "start":1,
-            "end":3
-         },
-         "context":{
-            "type":"variable",
-            "name":"var",
-            "value":"'name'",
-            "scope":"private",
-            "line":{
-               "start":4,
-               "end":4
-            }
+[
+   {
+      "commentRange":{
+         "start":1,
+         "end":3
+      },
+      "context":{
+         "type":"variable",
+         "name":"var",
+         "value":"'name'",
+         "scope":"private",
+         "line":{
+            "start":4,
+            "end":4
          }
       }
-   ],
-   "function":[
-      {
-         "commentRange":{
-            "start":6,
-            "end":8
-         },
-         "context":{
-            "type":"function",
-            "name":"name",
-            "code":"\n  $some : 'code';\n",
-            "line":{
-               "start":9,
-               "end":11
-            }
+   },
+   {
+      "commentRange":{
+         "start":6,
+         "end":8
+      },
+      "context":{
+         "type":"function",
+         "name":"name",
+         "code":"\n  $some : 'code';\n",
+         "line":{
+            "start":9,
+            "end":11
          }
       }
-   ],
-   "mixin":[
-      {
-         "commentRange":{
-            "start":13,
-            "end":15
-         },
-         "context":{
-            "type":"mixin",
-            "name":"mixin",
-            "code":"\n\n",
-            "line":{
-               "start":16,
-               "end":18
-            }
+   },
+   {
+      "commentRange":{
+         "start":13,
+         "end":15
+      },
+      "context":{
+         "type":"mixin",
+         "name":"mixin",
+         "code":"\n\n",
+         "line":{
+            "start":16,
+            "end":18
          }
       }
-   ],
-   "placeholder":[
-      {
-         "commentRange":{
-            "start":20,
-            "end":22
-         },
-         "context":{
-            "type":"placeholder",
-            "name":"placeholder",
-            "code":"\n\n",
-            "line":{
-               "start":23,
-               "end":25
-            }
+   },
+   {
+      "commentRange":{
+         "start":20,
+         "end":22
+      },
+      "context":{
+         "type":"placeholder",
+         "name":"placeholder",
+         "code":"\n\n",
+         "line":{
+            "start":23,
+            "end":25
          }
       }
-   ]
-}
+   }
+]
