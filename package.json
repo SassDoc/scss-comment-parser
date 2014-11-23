@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "cdocparser": "^0.9.0"
+    "cdocparser": "^0.10.0"
   },
   "devDependencies": {
     "assert": "^1.1.1",
