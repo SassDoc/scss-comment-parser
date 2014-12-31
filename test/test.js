@@ -31,6 +31,15 @@ describe('ScssCommentParser', function () {
         var context = parser.contextParser(getContent('placeholderLinebreaks.test.scss'));
         assert.deepEqual(context, expected);
       });
+
+      it('should detect code block while ignoring raw values', function(){
+        var context = parser.contextParser(getContent('placeholderWithRawValue.test.scss'));
+        assert.deepEqual(context, {
+          type: 'placeholder',
+          name: 'testPlaceholder-',
+          code: '\n  $some : "code";\n'
+        });
+      });
     });
 
     describe('mixin', function(){

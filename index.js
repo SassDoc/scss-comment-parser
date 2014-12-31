@@ -94,8 +94,16 @@ var extractCode = function (code, offset) {
   return code.substring(start, cursor);
 };
 
+var findCodeStart = function(ctxCode, lastMatch){
+  var codeStart = ctxCode.indexOf('{', lastMatch);
+  if (codeStart < 0 || ctxCode[codeStart-1] !== '#') {
+    return codeStart;
+  }
+  return findCodeStart(ctxCode, codeStart+1);
+};
+
 var addCodeToContext = function(context, ctxCode, match){
-  var codeStart = ctxCode.indexOf('{', match.index);
+  var codeStart = findCodeStart(ctxCode, match.index);
   if (codeStart >= 0) {
     context.code = extractCode(ctxCode, codeStart);
     return codeStart + context.code.length + 1; // Add closing brace!
@@ -176,12 +184,12 @@ var Parser = function (annotations, config) {
   this.commentParser = new CDocParser.CommentParser(annotations, config);
 };
 
-Parser.prototype.parse = function (code){
+Parser.prototype.parse = function (code, id){
   var comments = extractor.extract(code);
   comments.forEach(function (comment){
     comment.lines = filterAndGroup(comment.lines);
   });
-  return this.commentParser.parse(comments);
+  return this.commentParser.parse(comments, id);
 };
 
 Parser.prototype.contextParser = scssContextParser;
