@@ -162,13 +162,8 @@ describe('ScssCommentParser', function () {
         return result;
       };
 
-      it('should work with block comments', function(){
+      it('should work with line comments', function(){
         var result = parser.parse(getContent('groupByType.test.scss'));
-        result = ignoreDescription(result);
-        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
-      });
-      it('should work with mixed comments', function(){
-        var result = parser.parse(getContent('groupByTypeMixedComments.test.scss'));
         result = ignoreDescription(result);
         assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
@@ -181,13 +176,13 @@ describe('ScssCommentParser', function () {
           description : 'Test\nTest\n',
           commentRange: {
             start:1,
-            end:5
+            end:3
           },
           context : {
             type : 'function',
             line : {
-              start : 6,
-              end : 6
+              start : 4,
+              end : 4
             },
             name : 'test',
             code : ''
