@@ -1,7 +1,7 @@
 scss-comment-parser [![Build Status](https://travis-ci.org/SassDoc/scss-comment-parser.svg?branch=master)](https://travis-ci.org/SassDoc/scss-comment-parser)
 ---
 
-Parse `/** */` comments and extracts context from SCSS.
+Parse `///` comments and extracts context from SCSS.
 
 
 ## Install
@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.6.0`
+  * Update to `cdocparser@0.13.0`
+  * Make changes needed for SassDoc 2.0
 
 #### `0.5.1-rc1`
   * Update to `cdocparser@0.5.0`
