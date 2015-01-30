@@ -31,6 +31,15 @@ describe('ScssCommentParser', function () {
         var context = parser.contextParser(getContent('placeholderLinebreaks.test.scss'));
         assert.deepEqual(context, expected);
       });
+
+      it('should detect code block while ignoring raw values', function(){
+        var context = parser.contextParser(getContent('placeholderWithRawValue.test.scss'));
+        assert.deepEqual(context, {
+          type: 'placeholder',
+          name: 'testPlaceholder-',
+          code: '\n  $some : "code";\n'
+        });
+      });
     });
 
     describe('mixin', function(){
@@ -146,26 +155,34 @@ describe('ScssCommentParser', function () {
     });
 
     describe('group by type', function(){
-      it('should work with block comments', function(){
+      var ignoreDescription = function(result){
+        result.forEach(function(item){
+          delete item.description;
+        });
+        return result;
+      };
+
+      it('should work with line comments', function(){
         var result = parser.parse(getContent('groupByType.test.scss'));
-        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
-      });
-      it('should work with mixed comments', function(){
-        var result = parser.parse(getContent('groupByTypeMixedComments.test.scss'));
+        result = ignoreDescription(result);
         assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'));
       });
     });
 
     it('should ignore lines that start with "---"', function(){
         var result = parser.parse(getContent('ignoreLine.test.scss'));
-        assert.equal(result['function'].length, 1);
-        assert.deepEqual(result['function'][0], {
+        assert.equal(result.length, 1);
+        assert.deepEqual(result[0], {
           description : 'Test\nTest\n',
+          commentRange: {
+            start:1,
+            end:3
+          },
           context : {
             type : 'function',
             line : {
-              start : 6,
-              end : 6
+              start : 4,
+              end : 4
             },
             name : 'test',
             code : ''

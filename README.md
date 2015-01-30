@@ -38,8 +38,13 @@ console.log(comments);
 
 ## Changelog
 
+
+#### `0.5.1-rc1`
+  * Update to `cdocparser@0.5.0`
+  * Add support for configuration passed to the extractor.  
+
 #### `0.5.0`
-  * Update to `cdocparser@0.4.0
+  * Update to `cdocparser@0.4.0`
   * Add support for configuration passed to the extractor.  
 
 #### `0.4.0`
