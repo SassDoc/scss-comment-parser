@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.7.0`
+  * Update to `cdocparser@0.14.0`
+
 #### `0.6.0`
   * Update to `cdocparser@0.13.0`
   * Make changes needed for SassDoc 2.0
