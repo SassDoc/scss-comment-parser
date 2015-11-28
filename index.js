@@ -147,6 +147,13 @@ var scssContextParser = (function () {
           end : lineNumberFor(endIndex) + 1
         };
       }
+    } else {
+      var codeStart = ctxCode.indexOf('{');
+      if (codeStart > 0) {
+        context.type = 'css';
+        context.name = ctxCode.slice(0, codeStart).trim();
+        context.value = extractCode(ctxCode, codeStart).trim();
+      }
     }
 
     return context;

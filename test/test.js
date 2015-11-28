@@ -137,6 +137,17 @@ describe('ScssCommentParser', function () {
       });
     });
 
+    describe('css rule', function(){
+      it('should detect it', function(){
+        var context = parser.contextParser(getContent('rule.test.scss'));
+        assert.deepEqual(context, {
+          type: 'css',
+          name: '.foo',
+          value: 'font-weight: bold;\n  color: red;\n  .bar {\n    color: blue;\n  }'
+        });
+      });
+    });
+
     describe('unknown', function(){
       it('should assing unknown', function(){
         var context = parser.contextParser(getContent('unknown.test.scss'));
