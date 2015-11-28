@@ -1,7 +1,7 @@
 {
   "name": "scss-comment-parser",
   "version": "0.8.0",
-  "description": "Parses scss comments to build documentation",
+  "description": "Parse SCSS comments to build documentation",
   "repository": {
     "type": "git",
     "url": "https://github.com/SassDoc/ScssCommentParser"
@@ -14,7 +14,7 @@
     "README.md"
   ],
   "dependencies": {
-    "cdocparser": "^0.14.0"
+    "cdocparser": "^0.13.0"
   },
   "devDependencies": {
     "mocha": "^2.3.3"
