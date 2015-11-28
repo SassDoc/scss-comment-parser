@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.8.0`
+  * Allow CSS context parsing.
+
 #### `0.7.0`
   * Update to `cdocparser@0.14.0`
 
@@ -61,7 +64,7 @@ console.log(comments);
   * Added `context.code` to type `placeholder`.
 
 #### `0.3.1`
-  * Update to [`cdocparser`](https://github.com/FWeinb/CDocParser) 0.2.1 
+  * Update to [`cdocparser`](https://github.com/FWeinb/CDocParser) 0.2.1
 
 #### `0.3.0`
   * Add placeholder support (thanks to [callum](https://github.com/callum))
@@ -73,7 +76,7 @@ console.log(comments);
   * Fixed wrong code extraction for `function` and `mixin`. (See [#11](https://github.com/SassDoc/scss-comment-parser/issues/11))
 
 #### `0.2.2`
-  * Added `context.code` to type `function` and `mixin` containing the whole code. 
+  * Added `context.code` to type `function` and `mixin` containing the whole code.
 
 #### `0.2.1`
   * Fix bug in detection of comment blocks
