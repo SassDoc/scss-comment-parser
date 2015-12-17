@@ -146,6 +146,17 @@ describe('ScssCommentParser', function () {
           value: 'font-weight: bold;\n  color: red;\n  .bar {\n    color: blue;\n  }'
         });
       });
+
+      it('should add line numbers if lineNumberFor provided', function(){
+        var lineNumberFor = function (index) { return index; }
+        var context = parser.contextParser(getContent('rule.test.scss'), lineNumberFor);
+        assert.deepEqual(context, {
+          type: 'css',
+          name: '.foo',
+          value: 'font-weight: bold;\n  color: red;\n  .bar {\n    color: blue;\n  }',
+          line: { start: 6, end: 74 }
+        });
+      });
     });
 
     describe('unknown', function(){

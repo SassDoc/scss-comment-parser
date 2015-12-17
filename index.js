@@ -117,6 +117,7 @@ var scssContextParser = (function () {
     var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?\:([\s\S]*?)(?:\s!(\w+))?\;)?/;
     var parser = function (ctxCode, lineNumberFor) {
     var match = ctxRegEx.exec(ctxCode.trim());
+    var startIndex, endIndex;
 
     var context = {
       type : 'unknown'
@@ -124,8 +125,8 @@ var scssContextParser = (function () {
 
     if (match) {
       var wsOffset = Math.min(ctxCode.match(/\s*/).length - 1, 0);
-      var startIndex = wsOffset + match.index;
-      var endIndex = startIndex + match[0].length;
+      startIndex = wsOffset + match.index;
+      endIndex = startIndex + match[0].length;
 
       if (match[1] === '@' && (match[2] === 'function' || match[2] === 'mixin')) {
         context.type = match[2];
@@ -141,19 +142,21 @@ var scssContextParser = (function () {
         context.value = match[4].trim();
         context.scope = match[5] || 'private';
       }
-      if (lineNumberFor !== undefined) {
-        context.line = {
-          start : lineNumberFor(startIndex) + 1,
-          end : lineNumberFor(endIndex) + 1
-        };
-      }
     } else {
-      var codeStart = ctxCode.indexOf('{');
-      if (codeStart > 0) {
+      startIndex = ctxCode.indexOf('{');
+      endIndex = ctxCode.length - 1;
+      if (startIndex > 0) {
         context.type = 'css';
-        context.name = ctxCode.slice(0, codeStart).trim();
-        context.value = extractCode(ctxCode, codeStart).trim();
+        context.name = ctxCode.slice(0, startIndex).trim();
+        context.value = extractCode(ctxCode, startIndex).trim();
       }
+    }
+
+    if (lineNumberFor !== undefined && startIndex !== undefined) {
+      context.line = {
+        start : lineNumberFor(startIndex) + 1,
+        end : lineNumberFor(endIndex) + 1
+      };
     }
 
     return context;
