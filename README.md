@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.8.1`
+  * Fix CSS line numbers, expected by SassDoc.
+
 #### `0.8.0`
   * Allow CSS context parsing.
 
