@@ -143,7 +143,7 @@ var scssContextParser = (function () {
         context.scope = match[5] || 'private';
       }
     } else {
-      startIndex = ctxCode.indexOf('{');
+      startIndex = findCodeStart(ctxCode, 0);
       endIndex = ctxCode.length - 1;
       if (startIndex > 0) {
         context.type = 'css';
