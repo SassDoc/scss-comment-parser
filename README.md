@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+#### `0.8.2`
+  * Fix selectors with interpolations parsing.
+
 #### `0.8.1`
   * Fix CSS line numbers, expected by SassDoc.
 
