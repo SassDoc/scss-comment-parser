@@ -168,20 +168,21 @@ var scssContextParser = (function () {
 var filterAndGroup = function (lines) {
   var nLines = [];
   var group = false;
-  lines.forEach(function (line){
-    var isAnnotation = line.indexOf('@') === 0;
-    if (line.trim().indexOf('---') !== 0) { // Ignore lines that start with "---"
-      if (group){
-        if ( isAnnotation ) {
-          nLines.push(line);
+  lines.forEach(function (line) {
+    var trimmedLine = line.trim();
+    var isAnnotation = trimmedLine.indexOf('@') === 0;
+    if (trimmedLine.trim().indexOf('---') !== 0) { // Ignore lines that start with "---"
+      if (group) {
+        if (isAnnotation) {
+          nLines.push(trimmedLine);
         } else {
-          nLines[nLines.length - 1] += '\n' + line ;
+          nLines[nLines.length - 1] += '\n' + line;
         }
       } else if (isAnnotation) {
         group = true;
-        nLines.push(line);
+        nLines.push(trimmedLine);
       } else {
-        nLines.push(line);
+        nLines.push(trimmedLine);
       }
     }
   });
