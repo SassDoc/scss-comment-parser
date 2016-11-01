@@ -177,7 +177,7 @@ var filterAndGroup = function (lines) {
     var trimmedLine = line.trim();
     var isAnnotation = trimmedLine.indexOf('@') === 0;
     
-    if (trimmedLine.trim().indexOf('---') !== 0) { // Ignore lines that start with "---"
+    if (trimmedLine.indexOf('---') !== 0) { // Ignore lines that start with "---"
       if (group) {
         if (isAnnotation) {
           nLines.push(trimmedLine);
