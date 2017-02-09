@@ -17,7 +17,7 @@
     "cdocparser": "^0.13.0"
   },
   "devDependencies": {
-    "mocha": "^2.3.3"
+    "mocha": "^3.2.0"
   },
   "scripts": {
     "test": "mocha test"
