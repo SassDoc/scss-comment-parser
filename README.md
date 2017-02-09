@@ -1,6 +1,8 @@
 scss-comment-parser [![Build Status](https://travis-ci.org/SassDoc/scss-comment-parser.svg?branch=master)](https://travis-ci.org/SassDoc/scss-comment-parser)
 ---
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/SassDoc/scss-comment-parser.svg)](https://greenkeeper.io/)
+
 Parse `///` comments and extracts context from SCSS.
 
 
