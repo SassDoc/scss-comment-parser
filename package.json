@@ -17,9 +17,14 @@
     "cdocparser": "^0.13.0"
   },
   "devDependencies": {
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "standard": "^8.6.0"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "lint": "standard index.js test/**/*.js"
+  },
+  "standard": {
+    "env": { "mocha": true }
   }
 }
