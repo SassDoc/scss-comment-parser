@@ -187,7 +187,7 @@ describe('ScssCommentParser', function () {
       it('should work with line comments', function () {
         var result = parser.parse(getContent('groupByType.test.scss'))
         result = ignoreDescription(result)
-        assert.deepEqual(result, require(__dirname + '/expected/groupByType.json'))
+        assert.deepEqual(result, require(path.join(__dirname, 'expected', 'groupByType.json')))
       })
     })
 
