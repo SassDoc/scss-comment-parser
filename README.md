@@ -9,13 +9,13 @@ Parse `///` comments and extracts context from SCSS.
 ## Install
 
 ```shell
-npm install --save scsscommentparser
+npm install --save scss-comment-parser
 ```
 
 ## Usage
 
 ```js
-var ScssCommentParser = require('scsscommentparser');
+var ScssCommentParser = require('scss-comment-parser');
 
 var annotations = {
   _: {
