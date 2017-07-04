@@ -7,7 +7,7 @@ var getContent = function (file) {
   return fs.readFileSync(path.join(__dirname, 'fixtures', file), 'utf8')
 }
 
-describe('ScssCommentParser', function () {
+describe('scss-comment-parser', function () {
   describe('#contextParser', function () {
     var parser
 

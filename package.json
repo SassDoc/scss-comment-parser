@@ -4,7 +4,7 @@
   "description": "Parse SCSS comments to build documentation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SassDoc/ScssCommentParser"
+    "url": "https://github.com/SassDoc/scss-comment-parser"
   },
   "author": "Fabrice Weinberg <Fabrice@weinberg.me>",
   "license": "MIT",
