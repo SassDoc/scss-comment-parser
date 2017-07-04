@@ -40,6 +40,9 @@ console.log(comments);
 
 ## Changelog
 
+### `0.8.3`
+  * Fix remaining previous package name.
+
 #### `0.8.2`
   * Fix selectors with interpolations parsing.
 
