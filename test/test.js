@@ -116,7 +116,7 @@ describe('scss-comment-parser', function () {
         })
       })
 
-      it('should work for a variable that is build of of variabels', function () {
+      it('should work for a variable that is built of variables', function () {
         var context = parser.contextParser(getContent('variableAsListOfVariables.test.scss'))
         assert.deepEqual(context, {
           type: 'variable',
@@ -132,6 +132,16 @@ describe('scss-comment-parser', function () {
           type: 'variable',
           name: 'var',
           value: '\'test\'',
+          scope: 'private'
+        })
+      })
+
+      it('should work for a variable that contains a semicolon', function () {
+        var context = parser.contextParser(getContent('variableWithSemicolon.test.scss'))
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'name',
+          value: '\'separated;value\'',
           scope: 'private'
         })
       })
