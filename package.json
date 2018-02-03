@@ -1,6 +1,6 @@
 {
   "name": "scss-comment-parser",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Parse SCSS comments to build documentation",
   "repository": {
     "type": "git",

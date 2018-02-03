@@ -38,6 +38,9 @@ console.log(comments);
 
 ## Changelog
 
+### `0.8.4`
+  *  Fix parsing of variable values containing semicolons.
+
 ### `0.8.3`
   * Fix remaining previous package name.
 
