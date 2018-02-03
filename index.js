@@ -117,7 +117,7 @@ var addCodeToContext = function (context, ctxCode, match) {
  * SCSS Context Parser
  */
 var scssContextParser = (function () {
-  var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?:([\s\S]*?)(?:\s!(\w+))?;)?/
+  var ctxRegEx = /^(@|%|\$)([\w-_]+)*(?:\s+([\w-_]+)|[\s\S]*?:([\s\S]*?)(?:\s!(\w+))?;[ \t]*?(?=\/\/|\n|$))?/
   var parser = function (ctxCode, lineNumberFor) {
     var match = ctxRegEx.exec(ctxCode.trim())
     var startIndex, endIndex
