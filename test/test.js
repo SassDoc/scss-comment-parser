@@ -186,7 +186,7 @@ describe('scss-comment-parser', function () {
       parser = new ScssCommentParser({
         _: { alias: {} },
         test: {
-          parse: content => content.toString()
+          parse: function(content) { return content.toString() }
         }
       })
     })
