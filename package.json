@@ -1,10 +1,10 @@
 {
   "name": "scss-comment-parser",
-  "version": "0.8.1",
+  "version": "0.8.4",
   "description": "Parse SCSS comments to build documentation",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SassDoc/ScssCommentParser"
+    "url": "https://github.com/SassDoc/scss-comment-parser"
   },
   "author": "Fabrice Weinberg <Fabrice@weinberg.me>",
   "license": "MIT",
@@ -17,9 +17,14 @@
     "cdocparser": "^0.13.0"
   },
   "devDependencies": {
-    "mocha": "^2.3.3"
+    "mocha": "^3.2.0",
+    "standard": "^10.0.0"
   },
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha test",
+    "lint": "standard index.js test/**/*.js"
+  },
+  "standard": {
+    "env": { "mocha": true }
   }
 }

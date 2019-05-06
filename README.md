@@ -7,13 +7,13 @@ Parse `///` comments and extracts context from SCSS.
 ## Install
 
 ```shell
-npm install --save scsscommentparser
+npm install --save scss-comment-parser
 ```
 
 ## Usage
 
 ```js
-var ScssCommentParser = require('scsscommentparser');
+var ScssCommentParser = require('scss-comment-parser');
 
 var annotations = {
   _: {
@@ -37,6 +37,15 @@ console.log(comments);
 
 
 ## Changelog
+
+### `0.8.4`
+  *  Fix parsing of variable values containing semicolons.
+
+### `0.8.3`
+  * Fix remaining previous package name.
+
+#### `0.8.2`
+  * Fix selectors with interpolations parsing.
 
 #### `0.8.1`
   * Fix CSS line numbers, expected by SassDoc.
