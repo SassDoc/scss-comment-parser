@@ -170,7 +170,7 @@ describe('scss-comment-parser', function () {
     })
 
     describe('unknown', function () {
-      it('should assing unknown', function () {
+      it('should assign unknown', function () {
         var context = parser.contextParser(getContent('unknown.test.scss'))
         assert.deepEqual(context, {
           type: 'unknown'
@@ -183,7 +183,12 @@ describe('scss-comment-parser', function () {
     var parser
 
     beforeEach(function () {
-      parser = new ScssCommentParser({})
+      parser = new ScssCommentParser({
+        _: { alias: {} },
+        test: {
+          parse: content => content.toString()
+        }
+      })
     })
 
     describe('group by type', function () {
@@ -220,6 +225,18 @@ describe('scss-comment-parser', function () {
           code: ''
         }
       })
+    })
+
+    it('should parse annotations', function () {
+      var result = parser.parse(getContent('annotation.test.scss'))
+      assert.equal(result[0].description, 'Description\n')
+      assert.equal(result[0].test, 'Test')
+    })
+
+    it('should parse indented annotations', function () {
+      var result = parser.parse(getContent('indentedAnnotation.test.scss'))
+      assert.equal(result[0].description, 'Description\n')
+      assert.equal(result[0].test, 'Test')
     })
   })
 
