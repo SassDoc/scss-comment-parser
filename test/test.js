@@ -40,6 +40,15 @@ describe('scss-comment-parser', function () {
           code: '\n  $some : "code";\n'
         })
       })
+
+      it('should work for a name that contains a backslash', function () {
+        var context = parser.contextParser(getContent('placeholderNameWithBackslash.test.scss'))
+        assert.deepEqual(context, {
+          type: 'placeholder',
+          name: 'placeholder\\with\\backslash',
+          code: '\n  $some : "code";\n'
+        })
+      })
     })
 
     describe('mixin', function () {
@@ -58,6 +67,15 @@ describe('scss-comment-parser', function () {
         var context = parser.contextParser(getContent('mixinLinebreaks.test.scss'))
         assert.deepEqual(context, expected)
       })
+
+      it('should work for a name that contains a backslash', function () {
+        var context = parser.contextParser(getContent('mixinNameWithBackslash.test.scss'))
+        assert.deepEqual(context, {
+          type: 'mixin',
+          name: 'mixin\\with\\backslash',
+          code: '\n  $some : "code";\n'
+        })
+      })
     })
 
     describe('function', function () {
@@ -75,6 +93,15 @@ describe('scss-comment-parser', function () {
       it('should detect it with linebreaks', function () {
         var context = parser.contextParser(getContent('functionLinebreaks.test.scss'))
         assert.deepEqual(context, expected)
+      })
+
+      it('should work for a name that contains a backslash', function () {
+        var context = parser.contextParser(getContent('functionNameWithBackslash.test.scss'))
+        assert.deepEqual(context, {
+          type: 'function',
+          name: 'function\\with\\backslash',
+          code: '\n  $some : "code";\n'
+        })
       })
     })
 
@@ -142,6 +169,16 @@ describe('scss-comment-parser', function () {
           type: 'variable',
           name: 'name',
           value: '\'separated;value\'',
+          scope: 'private'
+        })
+      })
+
+      it('should work for a name that contains a backslash', function () {
+        var context = parser.contextParser(getContent('variableNameWithBackslash.test.scss'))
+        assert.deepEqual(context, {
+          type: 'variable',
+          name: 'variable\\with\\backslash',
+          value: '\'value\'',
           scope: 'private'
         })
       })
