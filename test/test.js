@@ -204,10 +204,16 @@ describe('scss-comment-parser', function () {
     it('should parse annotations on a nested block', function () {
       var annotationName = 'test';
       var annotations = {
-        _: { alias: { annotationName } },
+        _: {
+          alias: {
+            [annotationName]: annotationName
+          }
+        },
         [annotationName]: {
           name: annotationName,
-          parse: (text) => text,
+          parse (text) {
+            return text
+          },
         }
       }
 
