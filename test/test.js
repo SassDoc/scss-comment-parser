@@ -211,7 +211,7 @@ describe('scss-comment-parser', function () {
         },
         'test': {
           name: annotationName,
-          parse (text) {
+          parse: function (text) {
             return text
           },
         }
