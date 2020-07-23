@@ -6,9 +6,6 @@ node_js:
   - '4.2'
   - 'stable'
 
-env:
-  - CXX=g++-4.8
-
 sudo: false
 
 git:
