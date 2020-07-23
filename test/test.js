@@ -206,10 +206,10 @@ describe('scss-comment-parser', function () {
       var annotations = {
         _: {
           alias: {
-            [annotationName]: annotationName
+            'test': annotationName
           }
         },
-        [annotationName]: {
+        'test': {
           name: annotationName,
           parse (text) {
             return text
