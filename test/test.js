@@ -201,6 +201,22 @@ describe('scss-comment-parser', function () {
       })
     })
 
+    it('should parse annotations on a nested block', function () {
+      var annotationName = 'test';
+      var annotations = {
+        _: { alias: { annotationName } },
+        [annotationName]: {
+          name: annotationName,
+          parse: (text) => text,
+        }
+      }
+
+      var result = new ScssCommentParser(annotations).parse(getContent('annotationsNestedBlock.test.scss'));
+      assert.equal(result.length, 1);
+      assert.equal(result[0].description, 'Test description\n');
+      assert.equal(result[0][annotationName], 'TestType');
+    })
+
     it('should ignore lines that start with "---"', function () {
       var result = parser.parse(getContent('ignoreLine.test.scss'))
       assert.equal(result.length, 1)
