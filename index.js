@@ -170,25 +170,25 @@ var scssContextParser = (function () {
 })()
 
 var filterAndGroup = function (lines) {
-  var nLines = [];
-  var group = false;
+  var nLines = []
+  var group = false
 
   lines.forEach(function (line) {
     var trimmedLine = line.trim();
     var isAnnotation = trimmedLine.indexOf('@') === 0;
-    
+
     if (trimmedLine.indexOf('---') !== 0) { // Ignore lines that start with "---"
       if (group) {
         if (isAnnotation) {
           nLines.push(trimmedLine);
         } else {
-          nLines[nLines.length - 1] += '\n' + line;
+          nLines[nLines.length - 1] += '\n' + line
         }
       } else if (isAnnotation) {
-        group = true;
-        nLines.push(trimmedLine);
+        group = true
+        nLines.push(trimmedLine)
       } else {
-        nLines.push(trimmedLine);
+        nLines.push(trimmedLine)
       }
     }
   })
