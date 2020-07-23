@@ -202,7 +202,7 @@ describe('scss-comment-parser', function () {
     })
 
     it('should parse annotations on a nested block', function () {
-      var annotationName = 'test';
+      var annotationName = 'test'
       var annotations = {
         _: {
           alias: {
@@ -213,14 +213,14 @@ describe('scss-comment-parser', function () {
           name: annotationName,
           parse: function (text) {
             return text
-          },
+          }
         }
       }
 
-      var result = new ScssCommentParser(annotations).parse(getContent('annotationsNestedBlock.test.scss'));
-      assert.equal(result.length, 1);
-      assert.equal(result[0].description, 'Test description\n');
-      assert.equal(result[0][annotationName], 'TestType');
+      var result = new ScssCommentParser(annotations).parse(getContent('annotationsNestedBlock.test.scss'))
+      assert.equal(result.length, 1)
+      assert.equal(result[0].description, 'Test description\n')
+      assert.equal(result[0][annotationName], 'TestType')
     })
 
     it('should ignore lines that start with "---"', function () {
